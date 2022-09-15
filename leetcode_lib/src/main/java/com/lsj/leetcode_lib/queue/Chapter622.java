@@ -27,6 +27,8 @@ public class Chapter622 {
         System.out.println(chapter622);
     }
 
+
+
     //循环队列
     private int[] queue;
     private int capacity;

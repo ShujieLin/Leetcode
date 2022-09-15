@@ -38,6 +38,21 @@ class MyCircularQueue {
         return true;
     }
 
+    public boolean enQueue2(int value){
+        if (count == capacity) return false;
+        queue[(headIndex + count) % capacity] = value;
+        count += 1;
+        return true;
+    }
+
+
+    public boolean deQueue2(){
+        if (count == 0) return false;
+        headIndex = (headIndex + 1) % capacity;
+        count -= 1;
+        return true;
+    }
+
     /** Get the front item from the queue. */
     public int Front() {
         if (this.count == 0)
