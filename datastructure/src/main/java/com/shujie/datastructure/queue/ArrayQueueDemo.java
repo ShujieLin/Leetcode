@@ -7,8 +7,6 @@ import java.util.Scanner;
  * @author: linshujie
  */
 public class ArrayQueueDemo {
-
-
     public static void main(String[] args) {
         ArrayQueue arrayQueue = new ArrayQueue(3);
         char key = ' ';
