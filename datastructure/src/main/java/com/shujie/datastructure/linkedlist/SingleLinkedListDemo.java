@@ -1,18 +1,24 @@
 package com.shujie.datastructure.linkedlist;
 
+
 /**
  * @date: 2022/11/25
  * @author: linshujie
  */
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
-        HeroNode heroNode1 = new HeroNode(1,"A","AA");
-        HeroNode heroNode2 = new HeroNode(2,"B","BB");
-        HeroNode heroNode3 = new HeroNode(3,"C","CC");
+        HeroNode heroNode1 = new HeroNode(1, "A", "AA");
+        HeroNode heroNode2 = new HeroNode(2, "B", "BB");
+        HeroNode heroNode3 = new HeroNode(3, "C", "CC");
         SingleLinkedList linkedList = new SingleLinkedList();
-        linkedList.add(heroNode1);
+        /*linkedList.add(heroNode1);
         linkedList.add(heroNode2);
-        linkedList.add(heroNode3);
+        linkedList.add(heroNode3);*/
+        linkedList.addByOrder(heroNode2);
+        linkedList.addByOrder(heroNode1);
+        linkedList.addByOrder(heroNode3);
+        linkedList.addByOrder(heroNode2);
+        linkedList.addByOrder(heroNode1);
         linkedList.list();
     }
 }
@@ -40,17 +46,50 @@ class SingleLinkedList {
     }
 
     /**
+     * 按照变化大小添加，从小到大排列
+     * 思路：
+     * 1.判空
+     * 2.查找需要添加的结点
+     * 3.把新的结点进行插入
+     *
+     * @param node
+     */
+    public void addByOrder(HeroNode node) {
+        if (node == null) return;
+        HeroNode tempNode = head;
+        boolean isNodeExist = false;//假如结点已经存在了，则不需要添加
+        while (tempNode.next != null) {
+            if (tempNode.next.no > node.no) {
+                break;//找到了适合插入的位置
+            }else if (tempNode.next.no == node.no){
+                isNodeExist = true;
+                break;
+            }
+            tempNode = tempNode.next;
+        }
+        if (!isNodeExist){
+            node.next = tempNode.next;
+            tempNode.next = node;
+        }else {
+            System.out.println(node.no + "  has already exist");
+        }
+
+
+    }
+
+
+    /**
      * 遍历链表
      * 思路：
      * head赋值给临时变量，通过临时变量进行遍历
      */
-    public void list(){
+    public void list() {
         if (head.next == null) {
             System.out.println("linkedlist is null");
             return;
         }
         HeroNode temp = head;
-        while (temp.next != null){
+        while (temp.next != null) {
             temp = temp.next;
             System.out.println(temp.no + " " + temp.name + " " + temp.nickName);
         }
