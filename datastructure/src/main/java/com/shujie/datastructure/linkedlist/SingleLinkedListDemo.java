@@ -1,6 +1,8 @@
 package com.shujie.datastructure.linkedlist;
 
 
+import java.util.Stack;
+
 /**
  * @date: 2022/11/25
  * @author: linshujie
@@ -11,14 +13,20 @@ public class SingleLinkedListDemo {
         HeroNode heroNode2 = new HeroNode(2, "B", "BB");
         HeroNode heroNode3 = new HeroNode(3, "C", "CC");
         SingleLinkedList linkedList = new SingleLinkedList();
-        /*linkedList.add(heroNode1);
+        linkedList.add(heroNode1);
         linkedList.add(heroNode2);
-        linkedList.add(heroNode3);*/
-        linkedList.addByOrder(heroNode2);
+        linkedList.add(heroNode3);
+        /*linkedList.addByOrder(heroNode2);
         linkedList.addByOrder(heroNode1);
         linkedList.addByOrder(heroNode3);
         linkedList.addByOrder(heroNode2);
-        linkedList.addByOrder(heroNode1);
+        linkedList.addByOrder(heroNode1);*/
+        linkedList.list();
+        linkedList.delete(heroNode1);
+        linkedList.delete(heroNode2);
+        linkedList.delete(heroNode3);
+        linkedList.list();
+
         /*linkedList.list();
         linkedList.updataNode(new HeroNode(2,"hi","hello"));
         linkedList.list();
@@ -28,15 +36,18 @@ public class SingleLinkedListDemo {
         /*int count = SingleLinkedList.getCount(linkedList.head);
         System.out.println("count is " + count);*/
 
-        linkedList.list();
+        /*linkedList.list();*/
 
         /*SingleLinkedList.getReverseNode(linkedList.head, 0);
         SingleLinkedList.getReverseNode(linkedList.head, 4);
         SingleLinkedList.getReverseNode(linkedList.head, 3);*/
 
-        SingleLinkedList.reverseLinkedList(linkedList.head);
+       /* SingleLinkedList.reverseLinkedList(linkedList.head);
         System.out.println("反转链表");
-        linkedList.list();
+        linkedList.list();*/
+
+        /*System.out.println("-------------------------");
+        SingleLinkedList.reversePrint(linkedList.head);*/
     }
 }
 
@@ -230,6 +241,28 @@ class SingleLinkedList {
             curNode = nextNode;
         }
         head.next = reverseHead.next;
+    }
+
+    /**
+     * 逆序打印，不影响原来链表结构
+     * 思路：
+     * 借助栈的先进后出特性，进行逆序打印
+     * @param node
+     */
+    public static void reversePrint(HeroNode node){
+        if (node.next == null) {
+            return;
+        }
+        HeroNode tempNode = node;
+        Stack<HeroNode> heroNodes = new Stack<>();
+        while (tempNode.next != null){
+            heroNodes.push(tempNode.next);
+            tempNode = tempNode.next;
+        }
+        while (heroNodes.size()!=0){
+            System.out.println(heroNodes.pop().no);
+        }
+
     }
 
 }
