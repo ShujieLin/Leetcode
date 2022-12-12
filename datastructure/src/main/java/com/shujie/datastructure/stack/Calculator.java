@@ -6,8 +6,9 @@ package com.shujie.datastructure.stack;
  */
 public class Calculator {
 
+
     public static void main(String[] args) {
-        String expre = "3+2*6-2";
+        String expre = "30+2*2-1";
         ArrayStack2 numStack = new ArrayStack2(10);
         ArrayStack2 operationStack = new ArrayStack2(10);
 
@@ -17,6 +18,7 @@ public class Calculator {
         int operation = 0;//operation
         int result = 0;
         char ch = ' ';//每次扫描得到的char保存到ch
+        String keepNum = "";
 
         while (true) {
             ch = expre.substring(index, index + 1).charAt(0);
@@ -25,7 +27,7 @@ public class Calculator {
                 //当前符号栈是否为空
                 if (!operationStack.isEmpty()) {
                     //如果符号栈有操作符就进行比较，如果当前操作符优先级小于或等于栈的操作符，就在数栈pop出两个数,在符号栈pop出一个符号进行运算
-                    if (operationStack.priority(ch) <= operationStack.peek()) {
+                    if (operationStack.priority(ch) <= operationStack.priority(operationStack.peek())) {
                         num1 = numStack.pop();
                         num2 = numStack.pop();
                         operation = operationStack.pop();
@@ -34,29 +36,36 @@ public class Calculator {
                         numStack.push(result);
                         //然后将当前操作符入符号栈
                         operationStack.push(ch);
-                    }else {
+                    } else {
                         operationStack.push(ch);
                     }
                 } else {
                     operationStack.push(ch);
                 }
             } else {//如果是数字，直接入数栈
-                numStack.push(ch - 48);//ASCII码中符号对应的数字
+                /*numStack.push(ch - 48);//ASCII码中符号对应的数字*/
+                //往后面一位char检查
+                if (!operationStack.isOperation(expre.substring(index+1,index+2).charAt(0))){
+                    keepNum += ch;
+                }else {
+                    numStack.push(Integer.parseInt(keepNum));
+                    keepNum = "";
+                }
             }
             index++;
             if (index >= expre.length()) break;
         }
 
-        while (true){
+        while (true) {
             if (operationStack.isEmpty()) break;
             num1 = numStack.pop();
             num2 = numStack.pop();
             operation = operationStack.pop();
-            result = numStack.cal(num1,num2,operation);
+            result = numStack.cal(num1, num2, operation);
             numStack.push(result);
         }
 
-        System.out.printf("expression %s = %d" ,expre,numStack.pop());
+        System.out.printf("expression %s = %d", expre, numStack.pop());
     }
 }
 
@@ -142,6 +151,7 @@ class ArrayStack2 {
 
     /**
      * 计算
+     *
      * @param num1
      * @param num2
      * @param operation
@@ -156,7 +166,7 @@ class ArrayStack2 {
             return num2 * num1;
         } else if (operation == '/') {
             return num2 / num1;
-        }else {
+        } else {
             throw new IllegalArgumentException("error operation");
         }
     }
