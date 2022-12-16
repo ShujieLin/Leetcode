@@ -12,6 +12,7 @@ import java.util.Stack;
  */
 public class PolandNotation {
     public static void main(String[] args) {
+/*
 
 //        String suffixExpression = "3 4 + 5 * 6 -";
         String suffixExpression = "30 4 + 5 * 6 -";
@@ -19,6 +20,48 @@ public class PolandNotation {
         System.out.println(Arrays.toString(list.toArray()));
         String result = calculate(list);
         System.out.println("result = " + result);
+*/
+
+
+        String s = "100+((20+3)*4)-5";
+        List<String> expressionList = toInfixExpressionList(s);
+        System.out.println(expressionList);
+    }
+
+    /**
+     * 将中缀表达式转换为对应的list
+     * example：s = "100+((20+3)*4)-5"
+     * 思路：
+     * 遍历s，每次遍历一个char
+     * 遇到数字开启循环进行拼接numStr，直到遇到符号
+     * 遇到符号，直接假如list
+     *
+     * @param s
+     * @return
+     */
+    public static List<String> toInfixExpressionList(String s) {
+        if (s.equals("")){
+            throw new IllegalArgumentException();
+        }
+        List<String> list = new ArrayList<>();
+        int pointer = 0;
+        int lenght = s.length();
+        String numStr = "";
+        while (pointer < lenght) {
+            if (s.charAt(pointer) < 48 || s.charAt(pointer) > 57) {//ASCII
+                list.add(String.valueOf(s.charAt(pointer)));
+                pointer++;
+            } else {
+                while (pointer < lenght
+                        && (s.charAt(pointer) >=48  && s.charAt(pointer) <= 57)) {
+                    numStr += s.charAt(pointer);
+                    pointer++;
+                }
+                list.add(numStr);
+                numStr = "";
+            }
+        }
+        return list;
     }
 
     /**
@@ -40,13 +83,13 @@ public class PolandNotation {
                 int num2 = Integer.parseInt(stack.pop());
                 int num1 = Integer.parseInt(stack.pop());
                 int result = 0;
-                if (item.equals("+")){
-                   result = num1 + num2;
-                }else if (item.equals("-")){
+                if (item.equals("+")) {
+                    result = num1 + num2;
+                } else if (item.equals("-")) {
                     result = num1 - num2;
-                }else if (item.equals("*")){
+                } else if (item.equals("*")) {
                     result = num1 * num2;
-                }else if (item.equals("/")){
+                } else if (item.equals("/")) {
                     result = num1 / num2;
                 }
                 stack.push(String.valueOf(result));
@@ -59,6 +102,4 @@ public class PolandNotation {
         String[] split = suffixExpression.split(" ");
         return new ArrayList<>(Arrays.asList(split));
     }
-
-
 }
