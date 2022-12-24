@@ -74,7 +74,7 @@ public class Maze {
                     return true;//递归之后，假如结果为true，则这里return true，进入下一个判断继续递归，直到最后，确定所有递归都找到不到终点，返回false
                 } else if (setWay(map, row, column + 1)) {//右
                     return true;
-                } else if (setWay(map, row - 1, column)) {//上
+                } else if  (setWay(map, row - 1, column)) {//上
                     return true;
                 } else if (setWay(map, row, column - 1)) {//左
                     return true;
