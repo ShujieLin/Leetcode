@@ -10,8 +10,25 @@ public class InsertSort {
         int[] arr = {101, 34, 119, 1};
 
         /*insertSort(arr);*/
+//        insertSort2(arr);
+        insertSort3(arr);
+    }
 
-        insertSort2(arr);
+    private static void insertSort3(int[] arr) {
+        //第一轮{101,34,119,1} -> {34,101,119,1}
+        for (int i = 1; i < arr.length; i++) {
+            int insertVal = arr[i];
+            int insertIndex = i;
+
+            while (insertIndex - 1 >= 0 && insertVal < arr[insertIndex - 1]){
+                arr[insertIndex] = arr[insertIndex - 1];
+                insertIndex --;
+            }
+            //推出循环，说明找到插入的位置
+            arr[insertIndex] = insertVal;
+            System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
+        }
+
     }
 
     /**
