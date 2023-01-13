@@ -13,26 +13,25 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static void main(String[] args) {
-        int[] arr = new int[]{78, -9, 0, -567, 70, 23,-199,388,2,4,7723,533};
+        int[] arr = new int[]{78, -9, 0, -567, 70, 23,-199,388,2,1,112,445,12};
         quickSort(arr, 0, arr.length - 1);
         System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
+
     }
 
     private static void quickSort(int[] arr, int left, int right) {
-        //需要保存左右参数，后面需要进行递归
+        //创建临时左右指针变量。防止原本参数被改，后面需要使用原始参数进行递归
         int l = left;
         int r = right;
-        int pivot = arr[(left + right) / 2];//中轴的值
+        int pivot = arr[(l + r) / 2];//中轴的值
         int temp;
         while (l < r) {
             while (arr[l] < pivot) {//说明当前左边的排序是正确的
-//                l++;
-                l += 1;
+                l++;
             }
 
             while (arr[r] > pivot) {//说明当前右边的排序是正确的
-//                r--;
-                r -= 1;
+                r--;
             }
 
             //说明中轴左边的值全部小于中轴的值，右边的值全部大于中轴的值
