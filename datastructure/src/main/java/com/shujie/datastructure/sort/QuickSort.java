@@ -16,7 +16,6 @@ public class QuickSort {
         int[] arr = new int[]{78, -9, 0, -567, 70, 23,-199,388,2,1,112,445,12};
         quickSort(arr, 0, arr.length - 1);
         System.out.println("Arrays.toString(arr) = " + Arrays.toString(arr));
-
     }
 
     private static void quickSort(int[] arr, int left, int right) {
