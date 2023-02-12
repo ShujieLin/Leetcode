@@ -1,62 +1,72 @@
-package com.shujie.datastructure.tree;
+package com.shujie.datastructure.tree.treaded;
 
 /**
  * @author: linshujie
  */
-public class BinaryTreeDemo {
+public class ThreadedBinaryTreeDemo {
     public static void main(String[] args) {
-        HeroNode root = new HeroNode(1, "A");
-        HeroNode node2 = new HeroNode(2, "B");
-        HeroNode node3 = new HeroNode(3, "C");
-        HeroNode node4 = new HeroNode(4, "D");
-        HeroNode node5 = new HeroNode(5, "E");
+        HeroNode root = new HeroNode(1, "a");
+        HeroNode node2 = new HeroNode(3, "b");
+        HeroNode node3 = new HeroNode(6, "c");
+        HeroNode node4 = new HeroNode(8, "d");
+        HeroNode node6 = new HeroNode(10, "f");
+        HeroNode node7 = new HeroNode(14, "g");
 
         root.setLeft(node2);
         root.setRight(node3);
-        node3.setRight(node4);
-        node3.setLeft(node5);
+        node2.setLeft(node4);
+        node2.setRight(node6);
+        node3.setLeft(node7);
 
         BinaryTree binaryTree = new BinaryTree();
         binaryTree.setRoot(root);
+        binaryTree.threadedNodes();
 
-        /*System.out.println("前序遍历");
-        binaryTree.preOrder();
-
-        System.out.println("中序遍历");
-        binaryTree.infixOrder();
-
-        System.out.println("后序遍历");
-        binaryTree.postOrder();*/
-
-        //前序遍历
-        /*System.out.println("前序遍历");
-        int searchNo = 15;
-        HeroNode resNode = binaryTree.preOrderSearch(searchNo);
-        if (resNode != null)
-            System.out.printf("no = %d,name = %s", resNode.getNo(), resNode.getName());
-        else System.out.printf("没有找到no = %d的节点\n", searchNo);*/
-
-        //中序遍历
-        /*System.out.println("中序遍历");
-        int searchNo2 = 4;
-        HeroNode resNode2 = binaryTree.infixOrderSearch(searchNo2);
-        if (resNode2 != null)
-            System.out.printf("no = %d,name = %s", resNode2.getNo(), resNode2.getName());
-        else System.out.printf("没有找到no = %d的节点", searchNo2);*/
-
-        System.out.println("删除前，前序遍历");
-        binaryTree.preOrder();//1,2,3,5,4
-        binaryTree.deleteNode(5);
-        System.out.println("删除后，前序遍历");
-        binaryTree.preOrder();//1，,2，,3，,4
+        //测试10结点
+        System.out.println("10节点的前驱结点 = " + node6.getLeft() + " 后继结点 = " + node6.getRight());
     }
 }
 
 class BinaryTree {
     private HeroNode root;
+    private HeroNode pre;
 
     public void setRoot(HeroNode root) {
         this.root = root;
+    }
+
+    public void threadedNodes() {
+        this.threadedNodes(root);
+    }
+
+    /**
+     * 中序线索化
+     *
+     * @param node
+     */
+    public void threadedNodes(HeroNode node) {
+        if (node == null) return;
+
+        //1.先线索后左子树
+        threadedNodes(node.getLeft());
+        //2.线索后当前结点
+        //处理当前结点的前驱结点
+        if (node.getLeft() == null) {
+            node.setLeft(pre);//让当前节点的左指针指向前驱结点。
+            node.setLeftType(1);//当前结点的左指针类型为指向前驱结点。
+        }
+        //处理后继结点
+        if (pre != null && pre.getRight() == null) {
+            //让前驱结点的右指针指向当前结点
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+
+        //每处理完一次节点，让当前节点成为下一个节点的前驱结点
+        pre = node;
+
+        //3.线索化后子树
+        threadedNodes(node.getRight());
     }
 
     public void deleteNode(int no) {
@@ -114,14 +124,16 @@ class BinaryTree {
     }
 }
 
-/**
- * 节点
- */
 class HeroNode {
     private int no;
     private String name;
     private HeroNode left;
     private HeroNode right;
+
+    //0表示指向左子树，1表示指向前驱结点
+    private int leftType;
+    //0表示指向右子树，1表示指向后继结点
+    private int rightType;
 
     public HeroNode(int no, String name) {
         this.no = no;
@@ -276,5 +288,20 @@ class HeroNode {
     public void setRight(HeroNode right) {
         this.right = right;
     }
-}
 
+    public int getLeftType() {
+        return leftType;
+    }
+
+    public void setLeftType(int leftType) {
+        this.leftType = leftType;
+    }
+
+    public int getRightType() {
+        return rightType;
+    }
+
+    public void setRightType(int rightType) {
+        this.rightType = rightType;
+    }
+}
