@@ -24,6 +24,8 @@ public class ThreadedBinaryTreeDemo {
 
         //测试10结点
         System.out.println("10节点的前驱结点 = " + node6.getLeft() + " 后继结点 = " + node6.getRight());
+        System.out.println("中序遍历线索后的二叉树");
+        binaryTree.threadedList();
     }
 }
 
@@ -67,6 +69,32 @@ class BinaryTree {
 
         //3.线索化后子树
         threadedNodes(node.getRight());
+    }
+
+    /**
+     *   //0表示指向左子树，1表示指向前驱结点
+     *     private int leftType;
+     *     //0表示指向右子树，1表示指向后继结点
+     *     private int rightType;
+     */
+    public void threadedList() {
+        HeroNode node = root;
+        while (node!= null){
+            //lefttype需要是前驱结点
+            while (node.getLeftType() == 0){
+                node = node.getLeft();
+            }
+
+            //输出当前结点
+            System.out.println(node);
+
+            //righttype需要是后继结点
+            while (node.getRightType() == 1){
+                node = node.getRight();
+                System.out.println(node);
+            }
+            node = node.getRight();
+        }
     }
 
     public void deleteNode(int no) {
