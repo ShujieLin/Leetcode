@@ -1,22 +1,32 @@
-package com.shujie.datastructure.tree.binarysorttree;
+package com.shujie.datastructure.tree.AVLtreeDemo;
 
 /**
  * @author: linshujie
  */
-public class BinarySortTreeDemo {
+public class AVLTreeDemo {
+
     public static void main(String[] args) {
-        int[] arr = {7, 3, 10, 12, 5, 1, 9};
-        BinarySortTree binarySortTree = new BinarySortTree();
+        /*int[] arr = {4, 3, 6, 5, 7, 8};*/
+        int[] arr = {10, 12, 8, 9, 7, 6};
+        AVLTree avlTree = new AVLTree();
         for (int i = 0; i < arr.length; i++) {
-            binarySortTree.add(new Node(arr[i]));
+            avlTree.add(new Node(arr[i]));
         }
 
-        binarySortTree.infixOrder();
+        System.out.println("中序遍历");
+        avlTree.infixOrder();
+
+        System.out.println("没有平衡前");
+        System.out.println("树的高度" + avlTree.root.height());
+        System.out.println("左子树的高度" + avlTree.root.left.height());
+        System.out.println("右子树的高度" + avlTree.root.right.height());
+        System.out.println("根结点 = " + avlTree.root.value);
+        System.out.println("根结点的左子结点=" + avlTree.root.left);
     }
 }
 
-class BinarySortTree {
-    private Node root;
+class AVLTree {
+    Node root;
 
     public Node search(int value) {
         if (root == null) return null;
@@ -28,10 +38,10 @@ class BinarySortTree {
         else return root.searchParent(value);
     }
 
-    public int delRightTreeMin(Node node){
+    public int delRightTreeMin(Node node) {
         Node target = node;
         //循环查找左节点，就会找到最小值
-        while (target.left != null){
+        while (target.left != null) {
             target = target.left;
         }
         //删除最小节点
@@ -39,12 +49,12 @@ class BinarySortTree {
         return target.value;
     }
 
-    public void delNode(int value){
+    public void delNode(int value) {
         if (root == null) return;
         else {
             //找到要删除的节点
             Node targetNode = search(value);
-            if (targetNode == null){
+            if (targetNode == null) {
                 return;
             }
             //如果发现当前二叉排序树只有一个节点
@@ -56,27 +66,27 @@ class BinarySortTree {
             //找targetNode父结点
             Node parent = searchParent(value);
             //如果删除的是叶子结点
-            if (targetNode.left == null && targetNode.right == null){
+            if (targetNode.left == null && targetNode.right == null) {
                 //判断targetNode是父结点的左子结点还是右子节点
-                if (parent.left != null && parent.left.value ==value){
+                if (parent.left != null && parent.left.value == value) {
                     parent.left = null;
-                }else if (parent.right != null && parent.right.value == value){
+                } else if (parent.right != null && parent.right.value == value) {
                     parent.right = null;
                 }
-            }else if (targetNode.left != null && targetNode.right !=null){//有两颗字树
+            } else if (targetNode.left != null && targetNode.right != null) {//有两颗字树
                 int minVal = delRightTreeMin(targetNode.right);
                 targetNode.value = minVal;
-            }else {//只有一颗字树
-                if (targetNode.left!=null ){
-                    if (parent.left.value == value){
+            } else {//只有一颗字树
+                if (targetNode.left != null) {
+                    if (parent.left.value == value) {
                         parent.left = targetNode.left;
-                    }else {
+                    } else {
                         parent.right = targetNode.left;
                     }
-                }else {//只有右子树
-                    if (parent.left.value == value){
+                } else {//只有右子树
+                    if (parent.left.value == value) {
                         parent.left = targetNode.right;
-                    }else {
+                    } else {
                         parent.right = targetNode.right;
                     }
                 }
@@ -91,6 +101,7 @@ class BinarySortTree {
             root.add(node);
         }
     }
+
 
     public void infixOrder() {
         if (root != null) {
@@ -110,6 +121,58 @@ class Node {
         this.value = value;
     }
 
+    public int leftHeight() {
+        if (left == null) {
+            return 0;
+        }
+        return left.height();
+    }
+
+    public int rightHeight() {
+        if (right == null) {
+            return 0;
+        }
+        return right.height();
+    }
+
+    /**
+     * 返回当前为根结点的高度
+     */
+    public int height() {
+        return Math.max(left == null ? 0 : left.height(), right == null ? 0 : right.height()) + 1;
+    }
+
+    /**
+     * 左旋
+     */
+    private void leftRotate() {
+        Node newNode = new Node(value);
+        newNode.left = left;
+        newNode.right = right.left;
+        value = right.value;
+
+        //当前结点的右子树设置成当前结点的右子树的右子树
+        right = right.right;
+        //把当前结点的左子树设置为新的节点
+        left = newNode;
+    }
+
+    /**
+     * 右旋
+     */
+    private void rightRotate() {
+        Node newNode = new Node(value);
+        newNode.right = right;
+        newNode.left = left.right;
+        value = left.value;
+        left = left.left;
+        right = newNode;
+    }
+
+    /**
+     * @param value
+     * @return
+     */
     public Node search(int value) {
         if (value == this.value) {
             return this;
@@ -155,6 +218,31 @@ class Node {
                 this.right = node;
             } else {
                 this.right.add(node);
+            }
+        }
+
+        //添加节点后，如果右子树高度大于左子树高度，左旋转
+        if (rightHeight() - leftHeight() > 1) {
+            //如果右子树的左子树的高度大于它的右子树的高度
+            if (right != null && right.leftHeight() > right.rightHeight()) {
+                //先对右子节点进行右旋转
+                right.rightRotate();
+                leftRotate();
+            } else {
+                leftRotate();
+            }
+            return;
+        }
+
+        if (leftHeight() - rightHeight() > 1) {
+            //如果它的左子树的右子树高度大于它的左子树的高度
+            if (left != null && left.rightHeight() > left.leftHeight()) {
+                //对当前结点的左子树进行左旋转
+                left.leftRotate();
+                //在对当前结点进行右旋转
+                rightRotate();
+            } else {
+                rightRotate();
             }
         }
     }
