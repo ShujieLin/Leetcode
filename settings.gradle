@@ -10,3 +10,4 @@ rootProject.name = "Leetcode"
 include ':app'
 include ':leetcode_lib'
 include ':datastructure'
+include ':algorithm'

@@ -11,6 +11,7 @@ public class Graph {
     private ArrayList<String> vertextList;//存储顶点集合
     private int[][] edges;//存储图对应的邻结矩阵
     private int numOfEdges;//边的数目
+    private boolean[] isVisited ;
 
     public static void main(String[] args) {
         int n = 5;
@@ -35,7 +36,25 @@ public class Graph {
         edges = new int[n][n];
         vertextList = new ArrayList<String>();
         numOfEdges = 0;
+        isVisited = new boolean[5];
     }
+
+    public int getFirstNeighbor(int index){
+        for (int j = 0; j < vertextList.size(); j++) {
+            if (edges[index][j] > 0){
+                return j;
+            }
+        }
+        return -1;
+    }
+
+ /*   public int getNextNeighbor(int v1,int v2){
+        for (int j = v2 + 1 ;j < vertextList.size(); j++) {
+            if (edges[v1][j] > 0){
+
+            }
+        }
+    }*/
 
     /**
      * 返回节点个数
@@ -84,7 +103,7 @@ public class Graph {
     /**
      * 添加边
      *
-     * @param v1
+     * @param v1 example "A"-"B" "A"->0 "B"->1
      * @param v2
      * @param weight
      */
