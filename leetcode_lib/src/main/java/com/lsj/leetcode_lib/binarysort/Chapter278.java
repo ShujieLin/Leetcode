@@ -1,4 +1,4 @@
-package com.lsj.leetcode_lib;
+package com.lsj.leetcode_lib.binarysort;
 
 /**
  * @author linshujie
