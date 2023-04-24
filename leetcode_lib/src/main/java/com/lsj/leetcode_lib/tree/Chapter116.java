@@ -1,8 +1,5 @@
 package com.lsj.leetcode_lib.tree;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * @author linshujie
  */
@@ -11,8 +8,31 @@ public class Chapter116 {
 
     }
 
-     static class Solution {
+    static class Solution {
         public Node connect(Node root) {
+            if (root == null) return root;
+            traverse(root.left, root.right);
+            return root;
+        }
+
+        private void traverse(Node leftNode, Node rightNode) {
+            if (leftNode == null || rightNode == null) {
+                return;
+            }
+
+            //相邻的两个结点连接
+            leftNode.next = rightNode;
+
+            traverse(leftNode.left, leftNode.right);
+            traverse(rightNode.left, rightNode.right);
+            traverse(leftNode.right, rightNode.left);
+        }
+
+
+
+
+       /* public Node connect(Node root) {
+
             if(root == null) return null;
             Queue<Node> queue = new LinkedList<>();
             queue.offer(root);
@@ -29,7 +49,7 @@ public class Chapter116 {
                     if(node.right != null) queue.offer(node.right);
                 }
             }
-        }
+        }*/
     }
 }
 
