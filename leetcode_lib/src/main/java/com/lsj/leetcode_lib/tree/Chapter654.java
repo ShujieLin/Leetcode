@@ -22,7 +22,7 @@ public class Chapter654 {
             //找到数组的最大值
             int value = Integer.MIN_VALUE;
             int index = 0;
-            for (int i = lowIndex; i < highIndex; i++) {
+            for (int i = lowIndex; i <= highIndex; i++) {//这里必须是<=,传进来的不是长度，而是最大下标
                 if (value < nums[i]){
                     value = nums[i];
                     index = i;

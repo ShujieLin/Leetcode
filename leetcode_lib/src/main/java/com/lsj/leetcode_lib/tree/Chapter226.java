@@ -7,10 +7,10 @@ public class Chapter226 {
     public static void main(String[] args) {
 //        TreeNode node = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3));
         TreeNode node = null;
-        Utils.traverse(node);
+        Utils.preTraverse(node);
         TreeNode treeNode = new Solution().invertTree(node);
         System.out.println(" ===================== ");
-        Utils.traverse(treeNode);
+        Utils.preTraverse(treeNode);
     }
 
     static class Solution {
