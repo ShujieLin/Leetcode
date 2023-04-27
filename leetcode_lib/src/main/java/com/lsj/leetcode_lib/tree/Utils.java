@@ -17,6 +17,14 @@ public class Utils {
         System.out.println("root = " + root.val);
         infixTraverse(root.right);
     }
+
+    public static void infixTraverseReverse(TreeNode root){
+        if (root == null) return;
+        infixTraverseReverse(root.right);
+        System.out.println("root = " + root.val);
+        infixTraverseReverse(root.left);
+    }
+
     public static void postTraverse(TreeNode root){
         if (root == null) return;
         postTraverse(root.left);
