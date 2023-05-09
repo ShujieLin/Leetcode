@@ -38,6 +38,7 @@ public class C113 {
         public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
             res = new LinkedList<>();
 
+            
             LinkedList<Integer> path = new LinkedList<>();
             backstack(root, path, targetSum);
             return res;
