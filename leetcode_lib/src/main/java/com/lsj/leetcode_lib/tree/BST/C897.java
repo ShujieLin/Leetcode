@@ -25,14 +25,13 @@ public class C897 {
                         new TreeNode(1), new TreeNode(3))
                 , new TreeNode(5));
         Utils.preTraverse(treeNode);
-        TreeNode node = new Solution2().increasingBST(treeNode);
+        TreeNode node = new Solution().increasingBST(treeNode);
         Utils.preTraverse(node);
     }
 
     static class Solution {
         public TreeNode increasingBST(TreeNode root) {
-            traverse(root);
-            return root;
+            return traverse(root);
         }
 
         /**
