@@ -12,8 +12,6 @@ public class Jianzhi27 {
 
         TreeNode mirrorTree = new Solution().mirrorTree(node);
         Utils.preTraverse(mirrorTree);
-
-
     }
 
     static class Solution {
