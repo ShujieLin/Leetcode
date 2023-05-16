@@ -24,9 +24,9 @@ public class C897 {
                 new TreeNode(2,
                         new TreeNode(1), new TreeNode(3))
                 , new TreeNode(5));
-        Utils.preTraverse(treeNode);
+//        Utils.preTraverse(treeNode);
         TreeNode node = new Solution().increasingBST(treeNode);
-        Utils.preTraverse(node);
+//        Utils.preTraverse(node);
     }
 
     static class Solution {
@@ -47,7 +47,15 @@ public class C897 {
             root.left = null;
 
             TreeNode right = traverse(root.right);
+           /* if (root.right != right) {
+                System.out.println("root = " + root.val);
+                System.out.println("right = " + right.val);
+                System.out.println("root.right = " + root.right.val);
+            }*/
+            //操作过后，会把左子结点重新返回给父结点，这时候需要父结点重新把新的右子节点连接上，例如本例子中的6节点
             root.right = right;
+
+//            System.out.println("root.right = " + root.right.val + " right.val = " + right.val);
 
             //判断root是否存在left，不存在的话，无需处理
             if (left == null) return root;
