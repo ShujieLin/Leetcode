@@ -1,19 +1,32 @@
 package com.lsj.leetcode_lib.tree;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * @author linshujie
+ * @author: linshujie
  */
 public class C117 {
     public static void main(String[] args) {
         Node node = new Node(1,
-                new Node(2, new Node(4), new Node(5), null),
-                new Node(3, null, new Node(7), null),
+                new Node(2,
+                        new Node(4),
+                        new Node(5), null),
+                new Node(3,
+                        null,
+                        new Node(7), null),
                 null);
         new Solution().connect(node);
     }
+
+    static class Solution2 {
+        public Node connect(Node root) {
+            return null;
+        }
+
+    }
+
 
     static class Solution {
         public Node connect(Node root) {
@@ -26,6 +39,7 @@ public class C117 {
 
             while (!q.isEmpty()) {
                 int sz = q.size();
+
                 // 遍历一层
                 Node pre = null;
                 for (int i = 0; i < sz; i++) {
