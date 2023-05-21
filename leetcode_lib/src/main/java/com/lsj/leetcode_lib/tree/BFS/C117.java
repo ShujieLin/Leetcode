@@ -1,6 +1,7 @@
-package com.lsj.leetcode_lib.tree;
+package com.lsj.leetcode_lib.tree.BFS;
 
-import java.util.Arrays;
+import com.lsj.leetcode_lib.tree.Node;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -17,12 +18,42 @@ public class C117 {
                         null,
                         new Node(7), null),
                 null);
-        new Solution().connect(node);
+        Node connect = new Solution2().connect(node);
+
     }
 
     static class Solution2 {
         public Node connect(Node root) {
-            return null;
+            return bfs(root);
+        }
+
+        private Node bfs(Node root) {
+            if (root == null) return null;
+            Queue<Node> queue = new LinkedList<>();
+            queue.offer(root);
+
+            while (!queue.isEmpty()){
+                int size = queue.size();
+
+                //临时保持上一个节点
+                Node pre = null;
+
+                //遍历每一层
+                for (int i = 0; i < size; i++) {
+                    Node cur = queue.poll();
+                    if (pre != null) {
+                        pre.next = cur;
+                    }
+                    pre = cur;
+                    System.out.println("pre = " + pre.val);
+
+                    if (cur.left != null) queue.offer(cur.left);
+
+                    if (cur.right!=null) queue.offer(cur.right);
+
+                }
+            }
+            return root;
         }
 
     }

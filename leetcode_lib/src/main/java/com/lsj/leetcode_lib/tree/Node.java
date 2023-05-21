@@ -4,7 +4,7 @@ package com.lsj.leetcode_lib.tree;
  * @author linshujie
  */
 // Definition for a Node.
-class Node {
+public class Node {
     public int val;
     public Node left;
     public Node right;
