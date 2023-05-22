@@ -27,13 +27,14 @@ public class C1091 {
                     targetY = grid.length - 1;
 
             Queue<int[]> queue = new LinkedList<>();
-            Set<int[]> visited = new HashSet<>();
+            boolean[][] visited = new boolean[grid.length][grid.length];
 
             queue.offer(new int[]{0, 0});
-            visited.add(new int[]{0, 0});
+            visited[0][0] = true;
 
             //添加八个方向
-            int[][] dir = new int[][]{{-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}};
+            /*int[][] dir = new int[][]{{1, 1}, {0, 1}, {1, 0}, {-1, 1}, {-1, 0},{-1, -1}, {0, -1}, {1, -1}};*/
+            int[][] dir = new int[][]{{0, 1}, {1, 0}, {-1, 1}, {-1, 0},{-1, -1}, {0, -1}, {1, -1},{1, 1}};
 
             while (!queue.isEmpty()) {
                 int size = queue.size();
@@ -52,21 +53,21 @@ public class C1091 {
                     for (int i = 0; i < dir.length; i++) {
                         int nextX = x + dir[i][0];
                         int nextY = y + dir[i][1];
-                        System.out.println("nextX = " + nextX + " nextY = " + nextY);
+                        System.out.println("i = " + i + " nextX = " + nextX + " nextY = " + nextY);
 
-                        if (nextX >= 0 && nextX < targetX &&
-                                nextY >= 0 && nextX < targetY &&
-                                !visited.contains(new int[]{nextX, nextY}) &&
+                        if (nextX >= 0 && nextX < grid.length &&
+                                nextY >= 0 && nextY < grid.length &&
+                                !visited[nextX][nextY] &&
                                 grid[nextX][nextY] == 0) {
+                            System.out.println(grid[nextX][nextY]);
+                            System.out.println(" move forward " );
                             queue.offer(new int[]{nextX, nextY});
-                            visited.add(new int[]{nextX, nextY});
+                            visited[nextX][nextY] = true;
                         }
                     }
                 }
                 depth++;
             }
-
-
             return -1;
         }
 
