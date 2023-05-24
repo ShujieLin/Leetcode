@@ -23,46 +23,45 @@ public class C1091 {
 
         private int bfs2(int[][] grid) {
             int depth = 1;
-            int targetX = grid.length - 1,
-                    targetY = grid.length - 1;
+            int targetRow = grid.length - 1,
+                    targetColumn = grid.length - 1;
 
             Queue<int[]> queue = new LinkedList<>();
+            /*Set<int[]> visited = new HashSet<>();*/
             boolean[][] visited = new boolean[grid.length][grid.length];
 
             queue.offer(new int[]{0, 0});
             visited[0][0] = true;
 
             //添加八个方向
-            /*int[][] dir = new int[][]{{1, 1}, {0, 1}, {1, 0}, {-1, 1}, {-1, 0},{-1, -1}, {0, -1}, {1, -1}};*/
-            int[][] dir = new int[][]{{0, 1}, {1, 0}, {-1, 1}, {-1, 0},{-1, -1}, {0, -1}, {1, -1},{1, 1}};
+            int[][] dir = new int[][]{{-1, -1}, {0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}};
 
             while (!queue.isEmpty()) {
                 int size = queue.size();
                 for (int __ = 0; __ < size; __++) {
                     int[] cur = queue.poll();
-                    int x = cur[0];
-                    int y = cur[1];
+                    int row = cur[0];
+                    int cloumn = cur[1];
 
-                    if (grid[x][y] == 1) continue;
+                    if (grid[row][cloumn] == 1) continue;
 
-                    if (x == targetX &&
-                            y == targetY &&
-                            grid[x][y] == 0)
+                    if (row == targetRow &&
+                            cloumn == targetColumn &&
+                            grid[row][cloumn] == 0)
                         return depth;
 
                     for (int i = 0; i < dir.length; i++) {
-                        int nextX = x + dir[i][0];
-                        int nextY = y + dir[i][1];
-                        System.out.println("i = " + i + " nextX = " + nextX + " nextY = " + nextY);
+                        int nextRow = row + dir[i][0];
+                        int nextCloumn = cloumn + dir[i][1];
+                        System.out.println("nextRow = " + nextRow + " nextCloumn = " + nextCloumn);
 
-                        if (nextX >= 0 && nextX < grid.length &&
-                                nextY >= 0 && nextY < grid.length &&
-                                !visited[nextX][nextY] &&
-                                grid[nextX][nextY] == 0) {
-                            System.out.println(grid[nextX][nextY]);
-                            System.out.println(" move forward " );
-                            queue.offer(new int[]{nextX, nextY});
-                            visited[nextX][nextY] = true;
+                        if (nextRow >= 0 && nextRow < grid.length &&
+                                nextCloumn >= 0 && nextCloumn < grid.length &&
+                                !visited[nextRow][nextCloumn] &&
+                                grid[nextRow][nextCloumn] == 0) {
+                            System.out.println("move forward " );
+                            queue.offer(new int[]{nextRow, nextCloumn});
+                            visited[nextRow][nextCloumn] = true;
                         }
                     }
                 }
