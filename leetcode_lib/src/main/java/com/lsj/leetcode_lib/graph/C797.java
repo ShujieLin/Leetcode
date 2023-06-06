@@ -14,7 +14,6 @@ public class C797 {
         for (List<Integer> list : lists) {
             System.out.println("Arrays.toString(list.toArray()) = " + Arrays.toString(list.toArray()));
         }
-
     }
 
     static class Solution2 {
