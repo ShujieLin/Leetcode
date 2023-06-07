@@ -1,5 +1,6 @@
 package com.lsj.leetcode_lib.graph;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,22 +30,29 @@ public class C133 {
 
     static class Solution2 {
         private Set<Node> visited;
+        private HashMap<Node, Node> originToClone;
 
         public Node cloneGraph(Node node) {
             visited = new HashSet<>();
+            originToClone = new HashMap<>();
             traverse(node);
-
-            return null;
+            return originToClone.get(node);
         }
 
         private void traverse(Node node) {
             if (node == null) return;
             if (visited.contains(node)) return;
             visited.add(node);
+            System.out.println("add to visited = " + node.val);
 
-            for (Node n : node.neighbors) {
-                System.out.println("n = " + n.val);
-                traverse(n);
+            if (!originToClone.containsKey(node)) {
+                originToClone.put(node, new Node(node.val));
+                System.out.println("put in clone = " + node.val);
+            }
+            Node cloneNode = originToClone.get(node);
+            for (Node neighborNode : node.neighbors) {
+                traverse(neighborNode);
+                cloneNode.neighbors.add(neighborNode);
             }
         }
     }
@@ -63,6 +71,16 @@ public class C133 {
         }
 
         // DFS 图遍历框架
+
+        /**
+         * 判断是否存在
+         * 判断是否访问过
+         * 假如克隆map容器没有，新增节点并放进去，包含原来的结点（key）和克隆的结点(map)
+         * 拿出的当前克隆的结点
+         * 遍历当前节点的邻居集合，把邻居结点添加到集合
+         *
+         * @param node
+         */
         void traverse(Node node) {
             if (node == null) {
                 return;
@@ -72,19 +90,22 @@ public class C133 {
             }
             // 前序位置，标记为已访问
             visited.add(node);
+            System.out.println(" add to visited " + node.val);
+
             // 前序位置，克隆节点
             if (!originToClone.containsKey(node)) {
                 originToClone.put(node, new Node(node.val));
+                System.out.println(" = put in clone " + node.val);
             }
-            Node cloneNode = originToClone.get(node);
 
+            Node cloneNode = originToClone.get(node);
             // 递归遍历邻居节点，并构建克隆图
             for (Node neighbor : node.neighbors) {
-                System.out.println("neighbor.val = " + neighbor.val);
                 traverse(neighbor);
                 // 递归之后，邻居节点一定存在 originToClone 中
                 Node cloneNeighbor = originToClone.get(neighbor);
                 cloneNode.neighbors.add(cloneNeighbor);
+                System.out.println("add cloneNeighbor to cloneNode.neighbors = " + cloneNeighbor.val + " origin neighbor value = " + neighbor.val);
             }
         }
     }
