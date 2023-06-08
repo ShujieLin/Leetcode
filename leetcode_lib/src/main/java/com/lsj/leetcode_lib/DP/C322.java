@@ -118,7 +118,7 @@ public class C322 {
     static class MySolution4 {
         private int[] memo;
 
-        int coinChange(int[] coins, int amount) {
+       /* int coinChange(int[] coins, int amount) {
             if (amount == 0) return 0;
 
             int[] dp = new int[amount + 1];
@@ -128,7 +128,7 @@ public class C322 {
                     if (dp[i] == -1) continue;
                 }
             }
-        }
+        }*/
     }
 
     static class Solution1 {
