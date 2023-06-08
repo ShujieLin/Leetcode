@@ -7,10 +7,10 @@ import java.util.Arrays;
  */
 public class C322 {
     public static void main(String[] args) {
-        int i = new Solution1().coinChange(new int[]{1, 2, 5}, 11);
+        /*int i = new Solution1().coinChange(new int[]{1, 2, 5}, 11);
         System.out.println("i = " + i);
         int i1 = new MySolution1().coinChange(new int[]{1, 2, 5}, 11);
-        System.out.println("i1 = " + i1);
+        System.out.println("i1 = " + i1);*/
 
         int i2 = new MySolution2().coinChange(new int[]{1, 2, 5}, 11);
         System.out.println("i2 = " + i2);
@@ -59,7 +59,7 @@ public class C322 {
         private int dp(int[] coins, int amount, int[] memo) {
             if (amount == 0) return 0;
             if (amount < 0) return -1;
-
+            System.out.println("memo ["+ amount +"]= " + memo[amount]);
             //表示计算过
             if (memo[amount] != 666) return memo[amount];
 
