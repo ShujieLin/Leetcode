@@ -10,14 +10,70 @@ import java.util.List;
  */
 public class C139 {
     public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
+        /*List<String> list = new ArrayList<>();
         list.add("leet");
         list.add("code");
-        new Solution().wordBreak("leetcode",list);
+        new Solution().wordBreak("leetcode",list);*/
+
+        List<String> list = new ArrayList<>();
+        list.add("apple");
+        list.add("pen");
+        new MySolution().wordBreak("applepenapple", list);
     }
 
-    class Solution3 {
+    static class MySolution {
+
+        private int[] mem;
+
         public boolean wordBreak(String s, List<String> wordDict) {
+
+            //通过遍历字典，截取字典里面的单词和截取后s对比，存在相同则进行下一个递归
+            //查找到复合条件的进行返回
+            //-1 ：未访问 0：失败 1：成功
+            mem = new int[s.length() + 1];
+            Arrays.fill(mem, -1);
+            return dp(s, wordDict, 0);
+        }
+
+        private boolean dp(String s, List<String> wordDict, int i) {
+            System.out.println("-> i = " + i);
+            //假如i已经到达s的长度，说明找到可以对的上的单词
+            if (i == s.length()) {
+                System.out.println("<- true 1");
+                return true;
+            }
+
+            //添加备忘录,访问过的，直接return
+            if (mem[i] != -1){
+                return mem[i] == 1;
+            }
+
+            for (String word :
+                    wordDict) {
+                int length = word.length();
+                //长度不能超过s
+                if (i + length > s.length()) continue;
+
+                String substring = s.substring(i, i + length);
+
+                //不存在，查询下一个
+                if (!substring.equals(word)) {
+                    continue;
+                }
+
+                //找到相同，进行下一步
+                boolean res = dp(s, wordDict, i + length);
+                if (res) {
+                    //记录备忘录
+                    System.out.println("<- true 2");
+                    mem[i] = 1;
+                    return true;
+                }
+            }
+
+            mem[i] = 0;
+            System.out.println("<- false");
+            //找不到，返回false
             return false;
         }
     }
@@ -72,7 +128,6 @@ public class C139 {
         }
     }
 
-
     static class Solution {
         // 备忘录
         int[] memo;
@@ -87,7 +142,7 @@ public class C139 {
 
         // 定义：返回 s[i..] 是否能够被 wordDict 拼出
         boolean dp(String s, int i, List<String> wordDict) {
-            System.out.println("-> s = " + s + " i = " + i );
+            System.out.println("-> s = " + s + " i = " + i);
             // base case，整个 s 都被拼出来了
             if (i == s.length()) {
                 System.out.println("<- return true 1");
@@ -124,8 +179,6 @@ public class C139 {
             return false;
         }
     }
-// 详细解析参见：
-// https://labuladong.github.io/article/?qno=139
-
-
+    // 详细解析参见：
+    // https://labuladong.github.io/article/?qno=139
 }
