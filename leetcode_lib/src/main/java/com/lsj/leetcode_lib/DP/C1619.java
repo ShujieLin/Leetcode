@@ -12,7 +12,7 @@ public class C1619 {
         System.out.println("i = " + i);*/
 
         //10,-5,-2,4,0,3
-        int i = new Solution1().maxResult(new int[] {10,-5,-2,4,0,3 }, 3);
+        int i = new Solution1().maxResult(new int[]{10, -5, -2, 4, 0, 3}, 3);
         System.out.println("i = " + i);
     }
 
@@ -27,13 +27,13 @@ public class C1619 {
         // 能跳到 nums[p]，必然是从 nums[p-k..p-1] 中的某个位置跳来的
         // 故状态转移方程为：dp[p] = max(nums[p-k..p-1]) + nums[p]
         int dp(int[] nums, int p, int k) {
-            System.out.println(" -> p = " + p);
+            System.out.println(" -> p = " + p + " k = " + k);
             if (p == 0) {
-                System.out.println(" <-  nums[0]");
+                System.out.println(" <-  p = 0");
                 return nums[0];
             }
             if (p < 0) {
-                System.out.println(" <- MIN_VALUE");
+                System.out.println(" <- p < 0");
                 return Integer.MIN_VALUE;
             }
             // 实现状态转移方程
@@ -45,14 +45,14 @@ public class C1619 {
             }
             res += nums[p];
             /*System.out.println(" <- res = " + res + " p = " + p);*/
-            System.out.println("<- res = " + res);
+            System.out.println("<- p = " + p + " res = " + res);
             return res;
         }
     }
 
     static class Solution {
         public int maxResult(int[] nums, int k) {
-            return dp(nums,k,nums.length - 1);
+            return dp(nums, k, nums.length - 1);
         }
 
         private int dp(int[] nums, int k, int lastIndex) {
@@ -63,7 +63,7 @@ public class C1619 {
             int res = Integer.MIN_VALUE;
             //每次跳步范围：[1..k]
             for (int i = 1; i <= k; i++) {
-                res = Math.max(res,dp(nums,k,lastIndex - i));
+                res = Math.max(res, dp(nums, k, lastIndex - i));
             }
             res += nums[lastIndex];
 
