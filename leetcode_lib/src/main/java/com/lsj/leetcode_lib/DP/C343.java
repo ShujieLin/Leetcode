@@ -10,43 +10,60 @@ import java.util.Arrays;
  */
 public class C343 {
     public static void main(String[] args) {
-        new Solution().integerBreak(10);
+        int i = new Solution3().integerBreak(3);
+        System.out.println("i = " + i);
+    }
+
+    static class Solution3 {
+        public int integerBreak(int n) {
+            int[] dp = new int[n + 1];
+            dp[0] = 0;
+
+            for (int i = 0; i <= dp.length; i++) {
+                for (int j = 1; j <= n; j++) {
+                    System.out.println("i = " + i + " j = " + j);
+                    int multiply = (n - j) * j;
+                    dp[i] = Math.max(multiply,dp[i]);
+                }
+            }
+
+            System.out.println("Arrays.toString(dp) = " + Arrays.toString(dp));
+            return dp[n];
+        }
     }
 
     static class Solution {
+        private int[] mem;
+
         public int integerBreak(int n) {
+            mem = new int[n + 1];
+            return dp(n);
+        }
 
-            //int[] dp = new int[n + 1];
-            //Arrays.fill(dp, Integer.MIN_VALUE);
-            //
-            ////base case
-            //dp[2] = 1;
-
-            //状态转移
-            for (int i = 2; i <= n; i++) {
-
-                //Math.max()
+        /**
+         * n >= 2
+         *
+         * @param n
+         * @return
+         */
+        private int dp(int n) {
+            if (mem[n] != 0) return mem[n];
+            System.out.println(" -> n = " + n);
+            int res = 0;
+            for (int i = 1; i <= n; i++) {
+                System.out.println(i + " * " + (n - i));
+                int multiply = i * Math.max((n - i), dp(n - i));
+                res = Math.max(res, multiply);
             }
-
-            //System.out.println("Arrays.toString(dp) = " + Arrays.toString(dp));
-            return 0;
+            mem[n] = res;
+            System.out.println("< - return res = " + res);
+            return res;
         }
     }
 
     /**
-     * ->
      * integerBreak(4)
      * = max(1 * 3, 1 * integerBreak(3), 2 * 2, 2 * integerBreak(2))
-     * = max(
-     * 1 * max(3, integerBreak(3)),
-     * 1 * max(2, integerBreak(2))
-     * )
-     *
-     * ->
-     * int res = Integer.MIN_VALUE;
-     * for (int i = 1; i <= n; i++) {
-     * res = max(res, i * max(integerBreak(n - i), n - i));
-     * }
      */
     static class Solution2 {
         int[] memo;
@@ -56,7 +73,7 @@ public class C343 {
             return dp(n);
         }
 
-        // 定义：拆分 n 获得的最大乘积为 dp(n)
+        // 定义：拆分 n 获得的最大乘积为 dp(n),n >= 2
         int dp(int n) {
             if (n == 0) {
                 return 0;
@@ -71,8 +88,8 @@ public class C343 {
             // 状态转移方程
             int res = Integer.MIN_VALUE;
             for (int i = 1; i <= n; i++) {
-                res = Math.max(res,
-                        i * Math.max(dp(n - i), n - i));
+                int multiply = i * Math.max(dp(n - i), n - i);
+                res = Math.max(res, multiply);
             }
             memo[n] = res;
             return res;
