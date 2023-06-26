@@ -18,12 +18,15 @@ public class C343 {
         public int integerBreak(int n) {
             int[] dp = new int[n + 1];
             dp[0] = 0;
+            dp[1] = 1;
 
-            for (int i = 0; i <= dp.length; i++) {
-                for (int j = 1; j <= n; j++) {
+            for (int i = 2; i <= n; i++) {
+                for (int j = 1; j <= i; j++) {
                     System.out.println("i = " + i + " j = " + j);
-                    int multiply = (n - j) * j;
-                    dp[i] = Math.max(multiply,dp[i]);
+                    int multiply = Math.max((i - j), dp[i - j]) * j;
+                    System.out.println("multiply = " + multiply);
+                    dp[i] = Math.max(multiply, dp[i]);
+                    System.out.println("dp = " + dp[i]);
                 }
             }
 
@@ -34,7 +37,6 @@ public class C343 {
 
     static class Solution {
         private int[] mem;
-
         public int integerBreak(int n) {
             mem = new int[n + 1];
             return dp(n);
@@ -42,9 +44,6 @@ public class C343 {
 
         /**
          * n >= 2
-         *
-         * @param n
-         * @return
          */
         private int dp(int n) {
             if (mem[n] != 0) return mem[n];
