@@ -5,23 +5,36 @@ package com.lsj.leetcode_lib.jianzhi;
  */
 public class JZ46 {
     public static void main(String[] args) {
-
+        int i = new Solution().translateNum(12258);
+        System.out.println("i = " + i);
     }
 
     static class Solution {
         public int translateNum(int num) {
-
             return dp(num);
         }
 
         private int dp(int num) {
-
             String s = String.valueOf(num);
+            int n = s.length();
+            int[] dp = new int[n + 1];
+            //base case
+            dp[0] = 1;
+            dp[1] = 1;
 
-
-            return 0;
+            for (int i = 2; i < dp.length; i++) {
+                char c = s.charAt(i - 1), d = s.charAt(i - 2);
+                //单个数字组成字母
+                if (c >= '0' && c <= '9') {
+                    dp[i] = dp[i - 1] + dp[i];
+                }
+                //两个数字组成一个字母
+                if (d == '1' || d == '2' && c <= '5') {
+                    dp[i] = dp[i] + dp[i - 2];
+                }
+            }
+            return dp[n];
         }
-
     }
 
     static class Solution2 {
