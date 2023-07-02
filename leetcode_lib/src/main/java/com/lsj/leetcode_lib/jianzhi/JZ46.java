@@ -38,6 +38,8 @@ public class JZ46 {
     }
 
     static class Solution2 {
+
+
         public int translateNum(int num) {
             String s = num + "";
             int n = s.length();
