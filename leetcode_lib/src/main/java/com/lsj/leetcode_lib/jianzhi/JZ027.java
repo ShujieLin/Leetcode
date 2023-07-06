@@ -11,6 +11,7 @@ public class JZ027 {
 
         ListNode listNode = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(2, new ListNode(1)))));
         ListNode listNode2 = new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(1))));
+        ListNode listNode3 = new ListNode(1, new ListNode(2, new ListNode(3)));
         boolean palindrome = new Solution2().isPalindrome(listNode2);
         System.out.println("palindrome = " + palindrome);
     }
@@ -18,8 +19,7 @@ public class JZ027 {
 
     static class Solution2 {
         public boolean isPalindrome(ListNode head) {
-            ListNode node = new ListNode();
-            ListNode reverseNode = reverse(node);
+            ListNode reverseNode = reverseOnNew(head);
             Utils.traverse(head);
             System.out.println(" ------- ");
             Utils.traverse(reverseNode);
@@ -29,6 +29,29 @@ public class JZ027 {
                 reverseNode = reverseNode.next;
             }
             return true;
+        }
+
+        private ListNode reverseByRecursion(ListNode head) {
+            if (head == null) System.out.println("-> head = " + head);
+            else
+                System.out.println("-> head = " + head.val);
+
+            if (head == null || head.next == null) {
+                if (head == null) System.out.println("<- head = " + head);
+                else
+                    System.out.println("<- head = " + head.val);
+                return head;
+            }
+
+
+            ListNode newListNote = reverseByRecursion(head.next);
+            System.out.println("newListNote.val = " + newListNote.val);
+            head.next.next = head;
+            System.out.println("操作后：head = " + head.val + " head.next = " + head.next.val + " head.next.next = " + head.next.next.val) ;
+            head.next = null;
+
+            System.out.println(" <- " + newListNote.val);
+            return newListNote;
         }
 
         private ListNode reverse(ListNode head) {
@@ -47,18 +70,14 @@ public class JZ027 {
         }
 
         private ListNode reverseOnNew(ListNode head) {
-            ListNode cur = head, pre = null;
-            while (cur != null) {
-                //保存cur的下一个结点
-                ListNode next = cur.next;
-                //指向pre
-                cur.next = pre;
-                //把cur赋值给pre
-                pre = cur;
-                //cur指向一开始就保存好的下一个节点
-                cur = next;
+            ListNode cur = head, newHead = null;
+            while (cur!=null){
+                ListNode newNode = new ListNode(cur.val);
+                newNode.next = newHead;
+                newHead = newNode;
+                cur = cur.next;
             }
-            return pre;
+            return newHead;
         }
     }
 
