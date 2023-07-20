@@ -1,5 +1,6 @@
 package com.lsj.leetcode_lib.jianzhi;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,8 +9,8 @@ import java.util.Map;
  */
 public class JZ014 {
     public static void main(String[] args) {
-
-        String s1 = "ab", s2 = "eidbaooo";
+        /*String s1 = "cb", s2 = "eidbaooo";*/
+        String s1 = "ob", s2 = "eidboaoo";
         boolean b = new Solution().checkInclusion(s1, s2);
         System.out.println("b = " + b);
     }
@@ -17,40 +18,36 @@ public class JZ014 {
     static class Solution {
         public boolean checkInclusion(String s1, String s2) {
             int left = 0, right = 0;
-
-            Map<Character, Integer> window = new HashMap<>();
-            Map<Character, Integer> need = new HashMap<>();
-            for (char c :
-                    s1.toCharArray()) {
-                need.put(c, need.getOrDefault(c, 0));
+            //初始化count1
+            int[] count1 = new int[26];
+            int[] count2 = new int[26];
+            for (int i = 0; i < s1.length(); i++) {
+                count1[s1.charAt(i) - 'a']++;
             }
-            boolean res = false;
-            int valid = 0;
+            System.out.println("count1 = " + Arrays.toString(count1));
+
             while (right < s2.length()) {
-                char c1 = s2.charAt(right);
-                right++;
-                if (need.containsKey(c1)) {
-                    window.put(c1, window.getOrDefault(c1, 0) + 1);
-                    if (need.get(c1).equals(window.get(c1))) valid++;
-                }
+                count2[s2.charAt(right) - 'a']++;
 
-                while (right - left > s1.length()) {
-                    System.out.println("valid = " + valid);
-                    char c2 = s2.charAt(left);
-                    left++;
-                    if (need.containsKey(c2)) {
-                        window.put(c2, window.getOrDefault(c2, 0) - 1);
-                        if (need.get(c2).equals(window.get(c2))) valid--;
+                while (right - left + 1 == s1.length()) {
+                    System.out.println(
+                            "left = " + left + " right = " + right + " window = " + s2.substring(
+                                    left, right) + " count2 = " + Arrays.toString(count2));
+
+                    //关键：当窗口长度等于目标长度的时候进行判断
+                    //假如符合得到结果，假如不符合，窗口left后移一位，接着right后移一位，继续判断
+                    //直到终止
+                    if (Arrays.equals(count1, count2)) {
+                        return true;
                     }
+                    count2[s2.charAt(left) - 'a']--;
+                    left++;
                 }
 
-
-                System.out.println("s2 = " + s2.substring(left,right));
-
-
+                right++;
             }
-
-            return res;
+            System.out.println("count2 = " + Arrays.toString(count2));
+            return false;
         }
     }
 }
