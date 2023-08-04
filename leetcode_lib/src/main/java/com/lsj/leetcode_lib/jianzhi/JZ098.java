@@ -1,11 +1,13 @@
 package com.lsj.leetcode_lib.jianzhi;
 
+import java.util.Arrays;
+
 /**
  * @author: linshujie
  */
 public class JZ098 {
     public static void main(String[] args) {
-        int m = 3, n = 7;
+        int m = 7, n = 3;
         int uniquePaths = new Solution().uniquePaths(m, n);
         System.out.println("uniquePaths = " + uniquePaths);
     }
@@ -14,11 +16,15 @@ public class JZ098 {
         public int uniquePaths(int m, int n) {
 
             //dp
-            int[][] dp = new int[m - 1][n - 1];
-            dp[0][0] = 1;
-            dp[0][1] = 1;
-            dp[1][0] = 1;
-            dp[1][1] = 2;
+            int[][] dp = new int[m][n];
+            for (int i = 0; i < n; i++) {
+                dp[0][i] = 1;
+            }
+            for (int i = 0; i < m; i++) {
+                dp[i][0] = 1;
+            }
+            System.out.println("dp = " + Arrays.deepToString(dp));
+
 
             //转移方程
             for (int i = 1; i < m; i++) {
@@ -27,7 +33,6 @@ public class JZ098 {
                     System.out.println("dp[" + i + "][" + j + "] = " + dp[i][j]);
                 }
             }
-
 
             return dp[m - 1][n - 1];
         }
