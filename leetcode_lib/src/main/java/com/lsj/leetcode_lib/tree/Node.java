@@ -16,6 +16,12 @@ public class Node {
         val = _val;
     }
 
+    public Node(int _val,Node left, Node right) {
+        val = _val;
+        this.left = left;
+        this.right = right;
+    }
+
     public Node(int _val, Node _left, Node _right, Node _next) {
         val = _val;
         left = _left;

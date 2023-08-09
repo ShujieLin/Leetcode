@@ -5,7 +5,11 @@ package com.lsj.leetcode_lib.jianzhi;
  */
 public class JZ33 {
     public static void main(String[] args) {
-
+        int[] nums1 = new int[] { 1, 3, 2, 6, 5 };
+        int[] nums2 = new int[] { 1, 6, 3, 2, 5 };
+        int[] nums3 = new int[] { 4, 6, 7, 5 };
+        boolean postorder = new Solution().verifyPostorder(nums3);
+        System.out.println("postorder = " + postorder);
     }
 
     static class Solution {
@@ -34,24 +38,38 @@ public class JZ33 {
          * 如果左子树和右子树都满足BST的后序遍历条件，返回 true，否则返回 false。
          */
         public boolean verifyPostorder(int[] postorder) {
-            //找到根结点，即最后一个元素。
-            int root = postorder[postorder.length - 1];
+            return verifyPostorder(postorder, 0, postorder.length - 1);
+        }
 
-            int rightChildIndex = 0;
+        private boolean verifyPostorder(int[] postorder, int start, int end) {
+            System.out.println("start = " + start + " end = " + end);
+            if (start >= end) return true;
+
+            //找到根结点，即最后一个元素。
+            int root = postorder[end];
+            System.out.println("root = " + root);
+
+            int rightChildIndex = start;
             //找到第一个大于root的值，作为root.right,
-            for (int i : postorder) {
-                if (i > root) {
+         /*   for (int i = start; i < end; i++) {
+                if (postorder[i] > root) {
                     rightChildIndex = i;
                     break;
                 }
+            }*/
+
+            while (postorder[rightChildIndex] < root) {
+                rightChildIndex++;
             }
+            System.out.println("rightChildIndex = " + rightChildIndex);
 
             //遍历rightChild右侧的所有元素,看看是否都大于根结点
-            for (int i = rightChildIndex; i < postorder.length - 1; i++) {
+            for (int i = rightChildIndex; i < end; i++) {
                 if (postorder[i] < root) return false;
             }
 
-            return false;
+            return verifyPostorder(postorder, start, rightChildIndex - 1) && verifyPostorder(
+                    postorder, rightChildIndex, end - 1);
         }
     }
 }
