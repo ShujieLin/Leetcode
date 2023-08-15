@@ -22,6 +22,11 @@ public class JZ44 {
                         new TreeNode(9)));
         List<Integer> list = new Solution().largestValues(null);
         System.out.println("Arrays.toString(list) = " + Arrays.toString(list.toArray()));
+
+        String s1 = "sssa";
+        String s2 = "sssa";
+        System.out.println("s1.hashCode() = " + s1.hashCode());
+        System.out.println("s2.hashCode() = " + s2.hashCode());
     }
 
     static class Solution {
