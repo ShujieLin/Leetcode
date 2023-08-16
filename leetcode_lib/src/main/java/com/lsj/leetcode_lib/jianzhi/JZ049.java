@@ -2,7 +2,7 @@ package com.lsj.leetcode_lib.jianzhi;
 
 import com.lsj.leetcode_lib.tree.TreeNode;
 
-import java.util.List;
+import com.lsj.leetcode_lib.tree.Utils;
 
 /**
  * @author: linshujie
@@ -17,25 +17,29 @@ public class JZ049 {
                 new TreeNode(0));
         int i = new Solution().sumNumbers(node);
         System.out.println("i = " + i);
+
     }
 
     static class Solution {
         public int sumNumbers(TreeNode root) {
-            dfs(root,"");
-            return 0;
+            return  dfs(root, "");
         }
 
-        private int dfs(TreeNode root, String path) {
+        private int dfs(TreeNode root, String s) {
             if (root == null) return 0;
 
-            String curPath = path + root.val;
-            if (root.left == null && root.right == null){
-                return Integer.parseInt(curPath);
+            String cur = s + root.val;
+            if (root.left == null && root.right == null) {
+                System.out.println("cur = " + cur);
+                return Integer.parseInt(cur);
             }
+            //前序遍历获取所有值
+            //参数保存着上面结点的值
+            int left = dfs(root.left, cur);
+            int right = dfs(root.right, cur);
 
-            int left = dfs(root.left, curPath);
-            int right = dfs(root.right, curPath);
-
+            //后序遍历进行累加
+            return left + right;
         }
     }
 }
