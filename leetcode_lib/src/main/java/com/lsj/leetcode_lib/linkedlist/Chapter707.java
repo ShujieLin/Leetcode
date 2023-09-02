@@ -1,4 +1,4 @@
-package com.lsj.leetcode_lib.linklist;
+package com.lsj.leetcode_lib.linkedlist;
 
 /**
  * 设计链表

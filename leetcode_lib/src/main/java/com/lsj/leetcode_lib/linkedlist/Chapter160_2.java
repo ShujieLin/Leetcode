@@ -1,4 +1,6 @@
-package com.lsj.leetcode_lib.linklist;
+package com.lsj.leetcode_lib.linkedlist;
+
+import com.lsj.leetcode_lib.ListNode;
 
 /**
  * @date: 2022/6/10
