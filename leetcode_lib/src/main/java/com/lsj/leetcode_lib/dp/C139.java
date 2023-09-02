@@ -1,4 +1,4 @@
-package com.lsj.leetcode_lib.DP;
+package com.lsj.leetcode_lib.dp;
 
 import java.util.ArrayList;
 import java.util.Arrays;

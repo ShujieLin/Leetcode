@@ -1,4 +1,4 @@
-package com.lsj.leetcode_lib.DP;
+package com.lsj.leetcode_lib.dp;
 
 /**
  * @author linshujie
